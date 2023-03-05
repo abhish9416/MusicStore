@@ -1,18 +1,18 @@
 pipeline{
-    agent(label 'AGENT'){
-        stages{
-            stage('Version control system'){
-                steps{
-                    git url: 'https://github.com/abhish9416/MusicStore.git',
-                        branch: 'declarative'
-                }
+    agent{label 'AGENT'}
+    triggers {pollSCM('* * * * *') }
+    stages{
+        stage('VCS'){
+            steps{
+                git url: 'https://github.com/abhish9416/MusicStore.git',
+                branch: 'declarative'
             }
-            stage('Build the application'){
-                steps{
-                    sh 'dotnet build MusicStore.sln'
-                }
-
-           }    
         }
+        stage('Build'){
+            steps{
+                sh 'dotnet restore ./MusicStore/MusicStore.csproj && dotnet build ./MusicStore/MusicStore.csproj'
+            }
+        }
+        
     }
 }
