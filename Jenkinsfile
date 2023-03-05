@@ -13,6 +13,10 @@ pipeline{
                 sh 'dotnet restore ./MusicStore/MusicStore.csproj && dotnet build ./MusicStore/MusicStore.csproj'
             }
         }
-        
+        stage('Test'){
+            steps{
+                sh 'dotnet test ./MusicStore/MusicStore.csproj'
+            }
+        }
     }
 }
